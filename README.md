@@ -12,7 +12,7 @@ Anyways, let's dive in!
 
 What in the world are CryptoPunks??!
 
-![[./assets/intro.png]]
+![](./assets/intro.png)
 
 > 10,000 unique collectible characters 
 > with proof of ownership stored on the Ethereum blockchain
@@ -57,7 +57,7 @@ No middlemen or rent seekers.
 Reflecting on this, it must become immediately clear, that this is a paradigm shift technology that has implications far beyond "just" digital art.
 
 Let's have a glance over the contract and get a feel for how this code looks and what it does: [CryptoPunksMarket.sol](https://etherscan.deth.net/address/0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB). The goal isn't to understand everything, but it's helpful to skim through something like this before going into details.
-![[./assets/CryptoPunksMarketCode.png]]
+![](./assets/CryptoPunksMarketCode.png)
 ## Actors & Actions
 
 Something i like to do when looking at code, is making a model of it, in terms of "Subjects", "Objects", and "Verbs" or "Actions".
