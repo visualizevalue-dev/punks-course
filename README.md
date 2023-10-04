@@ -58,6 +58,10 @@ No middlemen or rent seekers.
 
 Reflecting on this, it must become immediately clear, that this is a paradigm shift technology that has implications far beyond "just" digital art.
 
+## The Art
+
+==TODO==
+
 ## The Code
 
 Let's have a glance over the contract and get a feel for how this code looks and what it does: [CryptoPunksMarket.sol](https://etherscan.deth.net/address/0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB). The goal isn't to understand everything, but it's helpful to skim through something like this before going into details.
@@ -409,14 +413,32 @@ Entities can...
 - withdraw sale proceeds
 
 
+==CONTINUE==
 
 
+### Buying a Punk
 
+### Offering a Punk for Sale
 
+#### General Market Offer
 
+#### Private Offer
 
+#### Cancel an Offer
 
+### Bidding Market
 
+#### Checking Bids on Punks
+
+#### Biding on a Punk
+
+#### Accept Bids on a Punk
+
+##### Sneaky Bids
+
+#### Withdraw a Bid
+
+### Ether Withdrawals
 
 
 ---
