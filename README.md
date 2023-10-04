@@ -16,9 +16,9 @@ What in the world are CryptoPunks??!
 
 ![](./assets/intro.png)
 
-> 10,000 unique collectible characters 
-> with proof of ownership stored on the Ethereum blockchain.
-> The project that inspired the modern CryptoArt movement. [...] 
+> 10,000 unique collectible characters <br>
+> with proof of ownership stored on the Ethereum blockchain. <br
+> The project that inspired the modern CryptoArt movement. [...] <br>
 > One of the earliest examples of a "Non-Fungible Token" [...].
 
 Let's unpack.
@@ -63,6 +63,8 @@ Reflecting on this, it must become immediately clear, that this is a paradigm sh
 ==TODO==
 
 ## The Code
+
+### A First Glance
 
 Let's have a glance over the contract and get a feel for how this code looks and what it does: [CryptoPunksMarket.sol](https://etherscan.deth.net/address/0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB). The goal isn't to understand everything, but it's helpful to skim through something like this before going into details.
 ![](./assets/CryptoPunksMarketCode.png)
@@ -157,13 +159,13 @@ This is a special kind of data structure: `punkIndexToAddress` points to somethi
 
 To access the owner value for a punk, we use the following syntax:
 ```solidity
-address punk0Owner = punkIndexToAddress[0]; // 0xe08c32737c021c7d05d116b00a68a02f2d144ac0
+address punk0Owner = punkIndexToAddress[0];     // 0xe08c32...44ac0
 
-address punk1Owner = punkIndexToAddress[1]; // 0xb88f61e6fbda83fbfffabe364112137480398018
+address punk1Owner = punkIndexToAddress[1];     // 0xb88f6...98018
 
 // Or if we were to use another variable:
 uint punk = 2;
-address punk2Owner = punkIndexToAddress[punk]; // 0x897aea3d51dcba918c41ae23f5d9a7411671dee0
+address punk2Owner = punkIndexToAddress[punk];  // 0x897ae...1dee0
 ```
 
 More on statements like that later though...
@@ -208,7 +210,7 @@ The mapping itself looks something like this:
 		"minValue": 0,
 		"onlySellTo": "0x0000000000000000000000000000000000000000"
 	},
-	// ...
+	"...": {},
 	"9999": {
 		"isForSale": true,
 		"punkIndex": 9999,
@@ -311,22 +313,7 @@ function allInitialOwnersAssigned() {
 
 In here, we find a new piece of code we haven't seen yet; and "if" statement. Programs typically interpret and run one statement after another. But the type of programs we can build with just linear flow is very limited. That's why we have these special things that control the flow of our program and make it behave differently depending on context.
 
-```mermaid
-flowchart TB
-    A("
-	    Call Function 
-	    allInitialOwnersAssigned()
-	") --> B{"
-		Transaction sender is the contract owner? 
-	    msg.sender != owner
-	"}
-    
-    B --No--> C[Throw Error]
-    B --Yes--> D(allPunksAssigned = true)
-    
-    C --> F(End)
-    D --> F
-```
+![](./assets/flowchart-allInitialOwnersAssigned.png)
 
 If we call the function as LarvaLabs, we assign the variable `allPunksAssigned` to `true`.
 If anyone else calls the function, it throws an error and the transaction is reverted.
@@ -361,32 +348,32 @@ indices   = [100,     101,     102];
 
 If we were to call the function with these inputs, we can imagine the flow of this code like so:
 
-```mermaid
-flowchart TB
-	subgraph FIRST
-		D{i < n?} --yes--> E["setInitialOwner(0x01234, 100)"]
-		E --> F["i = 1"]
-	end
-	subgraph SECOND
-		G{i < n?} --yes--> H["setInitialOwner(0x56789, 101)"]
-		H --> I["i = 2"]
-	end
-	subgraph THIRD
-		J{i < n?} --yes--> K["setInitialOwner(0xabcde, 102)"]
-		K --> L["i = 3"]
-	end
-	subgraph END
-		M{i < n?}
-		M --no--> N(End)
-	end
+```solidity
+setInitialOwners(addresses, indices)      // setInitialOwners(
+                                          //     [0x01234, 0x56789, 0xabcde],
+                                          //     [100, 101, 102]
+                                          // );
 
-    A("setInitialOwners([0x01234, 0x56789, 0xabcde], [100, 101, 102])") 
-	    --> B["n = 3"];
-	B --> C["i = 0"]
-	C --> FIRST
-	FIRST --> SECOND
-	SECOND --> THIRD
-	THIRD --> END
+uint n = addresses.length;                // n = 3
+uint i = 0;                               // i = 0
+
+// First Iteration...
+i < n;                                    // 0 < 3 = true
+setInitialOwner(addresses[i], indices[i]) // setInitialOwner(0x01234, 100)
+i++;                                      // i = 1
+
+// Second Iteration...
+i < n;                                    // 1 < 3 = true
+setInitialOwner(addresses[i], indices[i]) // setInitialOwner(0x56789, 101)
+i++;                                      // i = 2
+
+// Third Iteration...
+i < n;                                    // 2 < 3 = true
+setInitialOwner(addresses[i], indices[i]) // setInitialOwner(0xabcde, 102)
+i++;                                      // i = 3
+
+// Exit Loop
+i < n;                                    // 3 < 3 = false
 ```
 
 If you've gotten this far – congratulations! Code might look intimidating at first, but if we spend the time to go through it step by step it turns out it's not at all that bad...
