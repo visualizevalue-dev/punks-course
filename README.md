@@ -1,16 +1,12 @@
-# Understanding the Punks Marketplace
-
 a small contribution to the celebration of punks...
 
-## Intro
+# Intro
 
 Us humans have always been collectors. We like to gather things, name things, and derive meaning from making that a shared experience with others.
 
 In this little guide we want to explore the wild phenomenon of CryptoPunks together. Note – everything that's said is from our own personal lense & perspective, and doesn't necessarily represent the intent of the creators, owners, etc.. We'll go from a broad overview into the details of understanding actual code and core functionality.
 
-Anyways, let's dive in!
-
-## A High Level View
+# A High Level View
 
 What in the world are CryptoPunks??!
 
@@ -23,12 +19,12 @@ What in the world are CryptoPunks??!
 
 Let's unpack.
 
-### *1) 10,000 unique collectible characters*
+## *1) 10,000 unique collectible characters*
 
 Us humans have always been collectors. We like to gather things, name things, and derive meaning from making that a shared experience with others. Whether it's tangible things like gemstones or shells, watches or cars; less tangible things like books and art; or quite intangible things like ideas, knowledge, and insight. Collecting is what we do.
 CryptoPunks just extend the scope in which we can collect items: The digital realm... Ten thousand 24×24 pixel portraits of punks, assembled from various individual traits like hairstyles and jewelry.
 
-### *2) Proof of Ownership on the Ethereum Blockchain*
+## *2) Proof of Ownership on the Ethereum Blockchain*
 
 The Blockchain... Everyone has heard of it – "that thing where you can send digital money around". Well that's only a second order effect if you will. What the technology actually does is establish a shared log of historical events; a single source of truth of ***what*** happened ***when***.
 This enables us to do much more than just send digital money back and forth – one of which is the tracking of ownership of any object over time.
@@ -36,9 +32,9 @@ CryptoPunks make use of this. When they launched, they came with code that proce
 The state of the Ethereum blockchain is validated by hundreds of thousands of computers, distributed around the entire globe. Anyone that wants to can participate in securing the network, and there is no entity that could come in to change any part of its state, unless they follow the rules set out by the blockchain itself, and these programs called "smart contracts".
 For CryptoPunks, this piece of code is called the *"CryptoPunksMarket"* smart contract and we'll do a dive deep in a bit.
 
-### *3) Inspired the modern CryptoArt movement [...]; One of the earliest examples of a "Non-Fungible Token"*
+## *3) Inspired the modern CryptoArt movement [...]; One of the earliest examples of a "Non-Fungible Token"*
 
-The worlds biggest artists, auction houses and brands are all in agreement: We live in a digitized world. This is just a new medium, like there have been new art forms in the past.. It's here to stay, and cryptography\* and blockchain technologies enable us to collect, own, and trade them on a global, borderless market.
+The worlds biggest artists, auction houses and brands are all in agreement: We live in a digitized world. This is just a new medium, like there have been new art forms in the past.. It's here to stay, and cryptography[^1] and blockchain technologies enable us to collect, own, and trade them on a global, borderless market.
 Each object that's kept track of is called a "token". Tokens are identifiers for these objects, like the serial number of a car or the ISBN number of a book. And more specifically, in the case of most art, we refer to them as "non fungible tokens", because each identifier points to a unique piece, which can't be exchanged with another one to one.
 CryptoPunks were the seminal art project of its kind; and caught fire like no other. It inspired various technological standards that were derived from it and spearheaded an entire movement of established and new artists and developers experimenting in this new paradigm.
 And with every day, as more people and institutions join this new world to build, experiment, and collect, this special station of CryptoPunks is further solidified. In the end, all roads lead back to punks...
@@ -58,21 +54,20 @@ No middlemen or rent seekers.
 
 Reflecting on this, it must become immediately clear, that this is a paradigm shift technology that has implications far beyond "just" digital art.
 
-## The Art
+# The Art
 
 ==TODO==
 
-## The Code
+# The Code
 
-### A First Glance
-
-Let's have a glance over the contract and get a feel for how this code looks and what it does: [CryptoPunksMarket.sol](https://etherscan.deth.net/address/0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB). The goal isn't to understand everything, but it's helpful to skim through something like this before going into details.
 ![](./assets/CryptoPunksMarketCode.png)
-### Code Primitives
+
+## Talking Computers
 
 If you're not familiar with code at all, there are a few basics we have to cover. Software code is a set of statements that tell the thing running the code what to do... There are many many different languages, but they all share some general characteristics. For us, we're looking at "Solidity" code, which is the most common programming language used to develop Smart Contracts on Ethereum. It compiles to low level machine code that runs on the Ethereum Virtual Machine ("EVM"). We can think of the EVM as a virtualized computer that makes sure EVM code runs exactly the same on all machines participating in the network.
 
-#### Functions
+Open the [CryptoPunksMarket.sol](https://etherscan.deth.net/address/0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB) code for the CryptoPunksMarket to follow along!
+### Functions
 
 Functions are the core building blocks of smart contracts. Most importantly, they make up our entry points to stuff our users aught to be able to do...
 
@@ -120,7 +115,7 @@ For example, the `punkNoLongerForSale` function removes an existing sell-offer o
 
 ==TBD side story==
 
-#### Variables and Data Types
+### Variables and Data Types
 
 Let's jump back up to the very first line in the marketplace code:
 
@@ -135,7 +130,8 @@ Even though it's not used anywhere else it's one of the most important lines in 
 address owner;
 ```
 
-This instantiates a variable of type `address` called `owner`, but doesn't assign any initial value to it. Every participant in the Ethereum network is identified by an `address`, which is a 40 hexadecimal character long string\*\*. Sidenote: This line refers to LarvaLabs themselves, the creators of the contract and will be set a bit further down during the "contract deployment" (the moment it's added to the Ethereum blockchain). This instantiation doesn't have the `public` declaration, so this variable is only accessible from within the contract code itself.
+This instantiates a variable of type `address` called `owner`, but doesn't assign any initial value to it. Every participant in the Ethereum network is identified by an `address`, which is a 40 hexadecimal character long string[^2]. 
+Sidenote: This line refers to LarvaLabs themselves, the creators of the contract and will be set a bit further down during the "contract deployment" (the moment it's added to the Ethereum blockchain). This instantiation doesn't have the `public` declaration, so this variable is only accessible from within the contract code itself.
 
 Jump a couple lines down:
 
@@ -181,12 +177,10 @@ struct Offer {
 	bool isForSale;
 	uint punkIndex;
 	address seller;
-	uint minValue; // in ether
-	address onlySellTo; // specify to sell only to a specific person
+	uint minValue;
+	address onlySellTo;
 }
 
-// A record of punks that are offered for sale at a specific minimum value,
-// and perhaps to a specific person
 mapping (uint => Offer) public punksOfferedForSale;
 ```
 
@@ -264,9 +258,9 @@ The above event declaration reads as follows:
 
 Searching for the events in the contract we will see it used or "emitted" when a punk is sold or sent from wallet to wallet.
 
-#### Statements and Expressions
+### Statements and Expressions
 
-##### (Re-)Assignments
+#### (Re-)Assignments
 
 A variable is only really a variable when it changes, right? As mentioned above, variables point to values. And we can change what we point to over time (in Solidity, as long as their type remains the same).
 
@@ -298,9 +292,9 @@ allPunksAssigned = true;
 
 We previous instantiated `allPunksAssigned` on line 17 with `false`, and change it to `true` in the `allIninitialOwnersAssigned()` function.
 
-##### Control Flow
+#### Control Flow
 
-###### If this then that
+##### If this then that
 
 Let's have a closer look at this `allInitialOwnersAssigned()` function, as well as the code that influences how it works. It's fairly simple:
 
@@ -323,7 +317,7 @@ If anyone else calls the function, it throws an error and the transaction is rev
 
 But we're already getting too much in the nitty gritty...
 
-###### Loops
+##### Loops
 
 Let's have a look at the `setInitialOwners` function. Here we find a new type of control flow, a "for loop".
 
@@ -336,7 +330,7 @@ function setInitialOwners(address[] addresses, uint[] indices) {
 }
 ```
 
-It reads as follows:
+The for-loop itself reads as follows:
 1. `i` is zero
 2. as long as `i` is less than `n`, run the code within the for loop (`setInitialOwner(...)`)
 3. after each iteration, increment `i` by 1
@@ -381,16 +375,16 @@ i < n;                                    // 3 < 3 = false
 
 If you've gotten this far – congratulations! Code might look intimidating at first, but if we spend the time to go through it step by step it turns out it's not at all that bad...
 
-### Actors & Actions
+## Actors & Actions
 
 Something i like to do when looking at code, is making a model of it, in terms of "Subjects", "Objects", and "Verbs" or "Actions".
 
-First, as the "subjects", we have people interacting with the smart contract. In Blockchain land, we call these "Accounts"\*\*\*.
+First, as the "subjects", we have people interacting with the smart contract. In Blockchain land, we call these "Accounts"[^3].
 
 If we map out the contract on a high level, we can identify:
 - Subjects: `ContractOwner`, `PunkOwners`, `Bidders`
 - Objects: `Punks`, `Bids`, `Offers`
-- Actions: `assign`\*\*\*\*, `transfer`, `bid`, `acceptBid`, `withdrawBid`, `offerForSale`, `buy`, `withdrawEther`
+- Actions: `assign`[^4], `transfer`, `bid`, `acceptBid`, `withdrawBid`, `offerForSale`, `buy`, `withdrawEther`
 
 We can rephrase the above to the following:
 
@@ -406,54 +400,54 @@ Entities can...
 ==CONTINUE==
 
 
-### Buying a Punk
+## Buying a Punk
 
-### Offering a Punk for Sale
+## Offering a Punk for Sale
 
-#### General Market Offer
+### General Market Offer
 
-#### Private Offer
+### Private Offer
 
-#### Cancel an Offer
+### Cancel an Offer
 
-### Bidding Market
+## Bidding Market
 
-#### Checking Bids on Punks
+### Checking Bids on Punks
 
-#### Biding on a Punk
+### Biding on a Punk
 
-#### Accept Bids on a Punk
+### Accept Bids on a Punk
 
-##### Sneaky Bids
+#### Sneaky Bids
 
-#### Withdraw a Bid
+### Withdraw a Bid
 
-### Ether Withdrawals
+## Ether Withdrawals
 
-### Initial Distribution of Punks
+## Initial Distribution of Punks
 
-#### Claiming Punks
+### Claiming Punks
 
-#### A Marketplace Bug
+### A Marketplace Bug
 
-#### The fixed CryptoPunksMarketplace
+### The fixed CryptoPunksMarketplace
 
-## Further Readning
+# Further Readning
 
-### Wrapped CryptoPunks: The ERC721 Wrapper
+## Wrapped CryptoPunks: The ERC721 Wrapper
 
-### On Chain Punks
+## On Chain Punks
 
 
 ---
 
-\*) Participants don't have to trust each other, even in the presence of bad actors. Cryptography has enabled us to have private conversations online, and similarly its techniques can now be used to have asdkfja;lsdjf;asldjf;asldkfj
+[^1]: Participants don't have to trust each other, even in the presence of bad actors. Cryptography has enabled us to have private conversations online, and similarly its techniques can now be used to have asdkfja;lsdjf;asldjf;asldkfj
 
-\*\*) Addresses are derived from... asdf;jsadfsaldkjhfalk
+[^2]: Addresses are derived from... asdf;jsadfsaldkjhfalk
 
-\*\*\*) Most blockchains use private-public key cryptography to enable self governed participation in the network. Key pairs controlled by entities (e.g. people) 
+[^3]: Most blockchains use private-public key cryptography to enable self governed participation in the network. Key pairs controlled by entities (e.g. people) 
 
-\*\*\*\*) The early story of CryptoPunks is actually split into two contracts: The initial claim, and the reassignment to the original claimers after a bug was found in the first version of the contract.
+[^4]: The early story of CryptoPunks is actually split into two contracts: The initial claim, and the reassignment to the original claimers after a bug was found in the first version of the contract.
 
 
 
