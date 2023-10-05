@@ -81,19 +81,23 @@ Think of a simple ATM machine. It basically has one function, "Withdraw Cash". T
 If we skim the code of the CryptoPunksMarket contract, we find a whole list of user facing functions that are relevant to us:
 
 ```solidity
+// The initial distribution of punks
 function setInitialOwner() {}
 function setInitialOwners() {}
 function allInitialOwnersAssigned() {}
 function getPunk() {}
 
+// For Punk Owners
 function transferPunk() {}
 function punkNoLongerForSale() {}
 function offerPunkForSale() {}
 function offerPunkForSaleToAddress() {}
 
+// Execute Punk Purchases
 function buyPunk() {}
 function withdraw() {}
 
+// Bids on Punks
 function enterBidForPunk() {}
 function acceptBidForPunk() {}
 function withdrawBidForPunk() {}
@@ -181,7 +185,8 @@ struct Offer {
 	address onlySellTo; // specify to sell only to a specific person
 }
 
-// A record of punks that are offered for sale at a specific minimum value, and perhaps to a specific person
+// A record of punks that are offered for sale at a specific minimum value,
+// and perhaps to a specific person
 mapping (uint => Offer) public punksOfferedForSale;
 ```
 
@@ -268,7 +273,8 @@ A variable is only really a variable when it changes, right? As mentioned above,
 If we look into the constructor of our Marketplace contract, we see the following code:
 
 ```solidity
-// We set the owner to the caller of this function, which was Matt & John (LarvaLabs) themselves
+// We set the owner to the caller of this function,
+// which was Matt & John (LarvaLabs) themselves
 owner = msg.sender;
 
 // We set the total supply to ten thousand punks
@@ -280,9 +286,6 @@ punksRemainingToAssign = totalSupply;
 // We set the name to the string `CRYPTOPUNKS` and the symbol to `Ͼ`
 name = "CRYPTOPUNKS";
 symbol = "Ͼ";
-
-// We mark punks as non divisible by setting their token decimals to 0. Sidenote: The CryptoPunks contract was based on the ERC20 standard, which allowed creating tokens that have many decimal points. This doesn't make sense for punks...
-decimals = 0;
 ```
 
 All these assignments above either initially set or change the pointer of our variables to something new.
@@ -426,6 +429,20 @@ Entities can...
 #### Withdraw a Bid
 
 ### Ether Withdrawals
+
+### Initial Distribution of Punks
+
+#### Claiming Punks
+
+#### A Marketplace Bug
+
+#### The fixed CryptoPunksMarketplace
+
+## Further Readning
+
+### Wrapped CryptoPunks: The ERC721 Wrapper
+
+### On Chain Punks
 
 
 ---
